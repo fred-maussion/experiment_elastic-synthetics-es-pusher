@@ -1,0 +1,14 @@
+{
+  "name": "synthetics-es-pusher",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Push @elastic/synthetics results directly to Elasticsearch, bypassing Heartbeat",
+  "scripts": {
+    "test": "node test-pipeline.mjs",
+    "test:push": "node test-pipeline.mjs --push",
+    "journey": "elastic-synthetics --reporter ./es-reporter.mjs example.journey.js"
+  },
+  "dependencies": {
+    "@elastic/synthetics": "^1.26.1"
+  }
+}

@@ -80,7 +80,7 @@ The runner needs only an Elasticsearch endpoint and an API key — no Fleet enro
 
 - Elasticsearch + Kibana (Cloud or self-managed, 8.x+)
 - An API key with write access to `synthetics-*` data streams
-- A **Kibana private location** (see [One-time Kibana setup](#one-time-kibana-setup) below)
+- A **Private location in Kibana** (see [One-time Kibana setup](#one-time-kibana-setup) below)
 
 ### Local / CI runner
 

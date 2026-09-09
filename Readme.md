@@ -35,6 +35,47 @@ The trade-off: you register a **private location** in Kibana once (a one-time 2-
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph anywhere["Runner — any environment"]
+        direction TB
+        J["Journey script\n(.js / .ts)"]
+        R["ESReporter\n(this project)"]
+        J --> R
+    end
+
+    subgraph standard["Standard path — not required ❌"]
+        direction TB
+        FL["Fleet Server"]
+        AG["Elastic Agent\n(Fleet-managed)"]
+        HB["Heartbeat"]
+        FL --> AG --> HB
+    end
+
+    subgraph elastic["Elastic Stack"]
+        direction TB
+        ES[("Elasticsearch\nsynthetics-* streams")]
+        KI["Kibana\nSynthetics UI"]
+        ES --> KI
+    end
+
+    R -- "ES _bulk API\n(API key only)" --> ES
+    HB -. "standard path\n(bypassed)" .-> ES
+
+    style standard fill:#f9f9f9,stroke:#ccc,color:#aaa,stroke-dasharray:5 5
+    style FL fill:#f0f0f0,stroke:#ccc,color:#aaa
+    style AG fill:#f0f0f0,stroke:#ccc,color:#aaa
+    style HB fill:#f0f0f0,stroke:#ccc,color:#aaa
+    style anywhere fill:#e8f4fd,stroke:#1ba9f5
+    style elastic fill:#fff3e0,stroke:#f5a623
+```
+
+The runner needs only an Elasticsearch endpoint and an API key — no Fleet enrollment, no Agent policy assignment, no Heartbeat binary.
+
+---
+
 ## Requirements
 
 ### Elastic stack

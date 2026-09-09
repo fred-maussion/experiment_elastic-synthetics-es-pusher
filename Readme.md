@@ -48,26 +48,24 @@ flowchart LR
 
     subgraph standard["Standard path — not required ❌"]
         direction TB
-        FL["Fleet Server"]
-        AG["Elastic Agent\n(Fleet-managed)"]
-        HB["Heartbeat"]
-        FL --> AG --> HB
+        AG["Elastic Agent Complete\n(Docker only, includes Heartbeat)"]
     end
 
     subgraph elastic["Elastic Stack"]
         direction TB
+        FL["Fleet Server"]
         ES[("Elasticsearch\nsynthetics-* streams")]
         KI["Kibana\nSynthetics UI"]
+        FL --- ES
         ES --> KI
     end
 
     R -- "ES _bulk API\n(API key only)" --> ES
-    HB -. "standard path\n(bypassed)" .-> ES
+    AG -. "enroll / manage" .-> FL
+    AG -. "standard path\n(bypassed)" .-> ES
 
     style standard fill:#f9f9f9,stroke:#ccc,color:#aaa,stroke-dasharray:5 5
-    style FL fill:#f0f0f0,stroke:#ccc,color:#aaa
     style AG fill:#f0f0f0,stroke:#ccc,color:#aaa
-    style HB fill:#f0f0f0,stroke:#ccc,color:#aaa
     style anywhere fill:#e8f4fd,stroke:#1ba9f5
     style elastic fill:#fff3e0,stroke:#f5a623
 ```
